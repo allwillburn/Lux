@@ -1,4 +1,4 @@
-local ver = "0.01"
+local ver = "0.02"
 
 
 if FileExist(COMMON_PATH.."MixLib.lua") then
@@ -218,7 +218,7 @@ OnTick(function (myHero)
 
         for _, enemy in pairs(GetEnemyHeroes()) do
                 
-                if LuxMenu.KillSteal.Q:Value() and Ready(_Q) and ValidTarget(target, 1175) then
+                if LuxMenu.KillSteal.Q:Value() and Ready(_Q) and ValidTarget(target, 1175) and GetHP(enemy) < getdmg("Q",enemy) then
                  local QPred = GetPrediction(target,LuxQ)
                     if QPred.hitChance > (LuxMenu.KillSteal.Qpred:Value() * 0.1) and not QPred:mCollision(1) then
                            CastSkillShot(_Q, QPred.castPos)
@@ -226,14 +226,14 @@ OnTick(function (myHero)
                 end	
 
 
-                if LuxMenu.KillSteal.E:Value() and Ready(_E) and ValidTarget(target, 1000) then
+                if LuxMenu.KillSteal.E:Value() and Ready(_E) and ValidTarget(target, 1000) and GetHP(enemy) < getdmg("E",enemy) then 
                  local EPred = GetPrediction(target,LuxE)
                  if EPred.hitChance > (LuxMenu.Combo.Epred:Value() * 0.1) then
                            CastSkillShot(_E, EPred.castPos)
                  end
             end	
 			
-		if LuxMenu.KillSteal.R:Value() and Ready(_R) and ValidTarget(target, 3340) then
+		if LuxMenu.KillSteal.R:Value() and Ready(_R) and ValidTarget(target, 3340) and GetHP(enemy) < getdmg("R",enemy) then
                  local RPred = GetPrediction(target,LuxR)
                   if RPred.hitChance > (LuxMenu.KillSteal.Rpred:Value() * 0.1) then
                            CastSkillShot(_R, RPred.castPos)
