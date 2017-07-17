@@ -1,4 +1,4 @@
-local ver = "0.02"
+local ver = "0.03"
 
 
 if FileExist(COMMON_PATH.."MixLib.lua") then
@@ -62,6 +62,10 @@ LuxMenu.AutoMode:Slider("Epred", "E Hit Chance", 3,0,10,1)
 LuxMenu.AutoMode:Boolean("R", "Auto R", false)
 LuxMenu.AutoMode:Slider("Rpred", "R Hit Chance", 3,0,10,1)
 
+
+LuxMenu:SubMenu("AutoFarm", "AutoFarm")
+LuxMenu.AutoFarm:Boolean("Q", "Auto Q", false)
+LuxMenu.AutoFarm:Boolean("E", "Auto E", false)
 
 LuxMenu:SubMenu("LaneClear", "LaneClear")
 LuxMenu.LaneClear:Boolean("Q", "Use Q", true)
@@ -264,6 +268,21 @@ OnTick(function (myHero)
       	        end
           end
       end
+		
+		
+		--Auto on minions
+          for _, minion in pairs(minionManager.objects) do
+      			
+      			   	
+              if LuxMenu.AutoFarm.Q:Value() and Ready(_Q) and ValidTarget(minion, 1100) and GetCurrentHP(minion) < CalcDamage(myHero,minion,QDmg,Q) then
+                  CastSkillShot(_Q, minion)
+              end
+	     if LuxMenu.AutoFarm.E:Value() and Ready(_E) and ValidTarget(minion, 1000) and GetCurrentHP(minion) < CalcDamage(myHero,minion,EDmg,E) then
+                  CastSkillShot(_E, minion)
+              end
+	   end		
+		
+		
         --AutoMode
         if LuxMenu.AutoMode.Q:Value() and Ready(_Q) and ValidTarget(target, 1175) then
                  local QPred = GetPrediction(target,LuxQ)
