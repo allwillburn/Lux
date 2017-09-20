@@ -189,7 +189,7 @@ OnTick(function (myHero)
 	    end
 	    
 	    
-            if LuxMenu.Combo.R:Value() and Ready(_R) and ValidTarget(target, 3340) and and target.isRooted then
+            if LuxMenu.Combo.R:Value() and Ready(_R) and ValidTarget(target, 3340) and target.isRooted then
                  local RPred = GetPrediction(target,LuxR)
                  if RPred.hitChance > (LuxMenu.Combo.Rpred:Value() * 0.1) and not RPred:mCollision(1) then
                            CastSkillShot(_R, RPred.castPos)
