@@ -1,4 +1,4 @@
-local ver = "0.03"
+local ver = "0.04"
 
 
 if FileExist(COMMON_PATH.."MixLib.lua") then
@@ -40,6 +40,7 @@ LuxMenu.Combo:Boolean("W", "Use W in combo", true)
 LuxMenu.Combo:Boolean("E", "Use E in combo", true)
 LuxMenu.Combo:Slider("Epred", "E Hit Chance", 3,0,10,1)
 LuxMenu.Combo:Boolean("R", "Use R in combo", true)
+LuxMenu.Combo:Boolean("RS", "Use R if stunned", true)
 LuxMenu.Combo:Slider("Rpred", "R Hit Chance", 3,0,10,1)
 LuxMenu.Combo:Slider("RX", "X Enemies to Cast R",3,1,5,1)
 LuxMenu.Combo:Boolean("Cutlass", "Use Cutlass", true)
@@ -189,7 +190,14 @@ OnTick(function (myHero)
 	    end
 	    
 	    
-            if LuxMenu.Combo.R:Value() and Ready(_R) and ValidTarget(target, 3340) then
+            if LuxMenu.Combo.RS:Value() and Ready(_R) and ValidTarget(target, 3340) and GetMoveSpeed(target) < 1 then
+                 local RPred = GetPrediction(target,LuxR)
+                 if RPred.hitChance > (LuxMenu.Combo.Rpred:Value() * 0.1) and not RPred:mCollision(1) then
+                           CastSkillShot(_R, RPred.castPos)
+                 end
+            end	
+			
+	    if LuxMenu.Combo.R:Value() and Ready(_R) and ValidTarget(target, 3340) then
                  local RPred = GetPrediction(target,LuxR)
                  if RPred.hitChance > (LuxMenu.Combo.Rpred:Value() * 0.1) and not RPred:mCollision(1) then
                            CastSkillShot(_R, RPred.castPos)
