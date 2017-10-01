@@ -1,4 +1,4 @@
-local ver = "0.06"
+local ver = "0.07"
 
 
 if FileExist(COMMON_PATH.."MixLib.lua") then
@@ -190,7 +190,7 @@ OnTick(function (myHero)
 	    end
 	    
 	    
-            if LuxMenu.Combo.RS:Value() and Ready(_R) and ValidTarget(target, 3340) and GetMoveSpeed(target) < 1 then
+            if LuxMenu.Combo.RS:Value() and Ready(_R) and ValidTarget(target, 3340) and target.isRooted then
                  local RPred = GetPrediction(target,LuxR)
                  if RPred.hitChance > (LuxMenu.Combo.Rpred:Value() * 0.1) then
                            CastSkillShot(_R, RPred.castPos)
